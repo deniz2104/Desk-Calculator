@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+    <div class="loader-wrapper">
+        <span class="loader"></span>
+    </div>
+    <div class="centered-message" id="initial-message">
+        Desktop Calculator
+    </div>
+
+    <div id="calculator">
+        <input id="display" readonly>
+        <div id="keys">
+            <button onclick="adauga('+')" class="operator"> + </button>
+            <button onclick="adauga('7')"> 7 </button>
+            <button onclick="adauga('8')"> 8 </button>
+            <button onclick="adauga('9')"> 9 </button>
+            <button onclick="adauga('-')" class="operator"> - </button>
+            <button onclick="adauga('4')"> 4 </button>
+            <button onclick="adauga('5')"> 5 </button>
+            <button onclick="adauga('6')"> 6 </button>
+            <button onclick="adauga('*')" class="operator"> * </button>
+            <button onclick="adauga('1')"> 1 </button>
+            <button onclick="adauga('2')"> 2 </button>
+            <button onclick="adauga('3')"> 3 </button>
+            <button onclick="adauga('/')" class="operator"> / </button>
+            <button onclick="adauga('0')"> 0 </button>
+            <button onclick="adauga(',')"> , </button>
+            <button onclick="calculate()"> = </button>
+            <button onclick="clear_display()" class="operator"> C </button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('#initial-message').fadeOut(3000, function () {
+                    setTimeout(function () {
+                        $('.loader-wrapper').fadeOut(1500, function () {
+                            $('#calculator').fadeIn(1500);
+                        });
+                    }, 1500);
+                });
+            }, 1);
+        });
+    </script>
+</body>
+
+</html>
