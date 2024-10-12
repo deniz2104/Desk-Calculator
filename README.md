@@ -26,12 +26,24 @@ Principala motivatie a fost implementarea logicii operatiilor aritmetice si dezv
 Functionalitatea principala se leaga de functiile:
 
 - `custom_eval_funct()` care include:
-  -
-  -
-  -
+  - `tokenize()` care contine:
+    - `formatWithThousandSeparator_used_for_eval()`
+  - `expresie()` care contine:
+    - `procesare_dividere_si_multiplicare()`
+    - `adunare_si_scadere()`
 - `displayResult()`
-- `updateDisplay()`
--
+- `updateDisplay()` care include:
+  - `formatWithThousandSeparator()`
+
+Functia `custom_eval_funct()` reprezinta inlocuirea evaluatorului built-in eval() in care se face separarea numerelor si a operatorilor,respectiv,expresia.
+
+Functia `tokenize()` separa operatorii si numerele,inclusiv cele negative.Se prelucreaza cu functia `formatWithThousandSeparator_used_for_eval()` care inlocuieste ',' cu '.' si scoate caracterele '.' din partea de intreg.
+
+Functia `expresie()` in care se apeleaza functiile folosite pentru calcularea expresiei,respectandu-se ordinea operatorilor.
+
+Functia `displayResult()` in care se va prelucra numarul primit ca parametru si transmis intr-un format corect.Partea de intreg va fi prelucrata si caracterul '.' fiind pus in cazul miilor,concatenat cu ',' si cu partea de zecimale.Am folosit functia `toFixed()` pentru a preveni un potential overflow la introducerea altui numar mare.
+
+Functia `updateDisplay()` unde se va prelucra stringul astfel incat numerele de ordinul miilor/milioanelor sa fie reprezentate corect.Am folosit un regex de operatori pe care l-am folosit pentru a imparti string-ul in doua.Apoi am prelucrat partea dinainte de operator,apoi am adaugat operatorul.
 
 ## Motive pentru care nu am folosit functia predefinita eval():
 
@@ -64,6 +76,7 @@ Proiectul este functional,dar,urmeaza sa adaug imbunatiri:
 
 - Alert messages user-friendly,sa nu mai fie afisate prin intermediul browserului
 - In caz ca doresc sa schimb operatorul,sa se modifice cu cel anterior in caz ca nu adaug cifra
-- Anti-spam modificat prin timp de o secunda intre click-uri
+- Anti-spam modificat prin timp de o secunda intre click-uri in urma apasarii butonului '='
 - Sa pot incepe si cu '+' si sa pot schimba cu '-' daca nu introduc cifra
 - Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
+- Fontul display ul sa se micsoreze in urma adaugarii mai multor caractere pentru a fi vizibil total.
