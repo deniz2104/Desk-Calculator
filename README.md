@@ -1,4 +1,4 @@
-### Desktop Calculator from scratch
+# Desktop Calculator from scratch
 
 ## Descriere:
 
