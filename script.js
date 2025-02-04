@@ -1,7 +1,18 @@
 const display = document.getElementById("display");
+let list_of_fontsizes = ["2.5rem", "2.4rem", "2.3rem", "2.2rem", "2.1rem"];
+let list_of_lenghts = [10, 14, 18, 22, 26];
+let index_of_lenghts = 0;
 let prev_input = "";
 let prev_display = "";
 let count = 0;
+
+//TODO: alert message user-friendly
+//TODO: schimbare operator in caz ca vreau sa l schimb
+//TODO: implementare modulo
+//TODO: timer de o secunda intre click-uri si sa sterg spam-ul
+//TODO: variabila in care retin ultimul operator introdus,sa se inlocuiasca daca nu se introduce alt numar si continui sa dau egal
+//TODO: sa pot incepe cu plus sau minus si sa le pot schimba iar intre ele daca introduce iar alt operator
+//TODO: sa micsorez textul pe masura ce adaug caractere
 
 function adauga(input) {
   if (display.value.length >= 1) {
@@ -111,8 +122,13 @@ function updateDisplay(input) {
         formattedValue += operators[index];
       }
     });
-
     display.value = formattedValue;
+  }
+  for (let i = 0; i < list_of_lenghts.length; i++) {
+    if (list_of_lenghts[i] === display.value.length) {
+      display.style.fontSize = list_of_fontsizes[i];
+      break;
+    }
   }
 }
 
@@ -226,7 +242,7 @@ function isOperator(char) {
 }
 
 function too_long_input(input) {
-  return input.length >= 25;
+  return input.length > 30;
 }
 
 function too_many_clicks() {
