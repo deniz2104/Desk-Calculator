@@ -10,8 +10,6 @@ let count = 0;
 //TODO: implementare istoric cu rezultatele
 //TODO: alert message user-friendly
 //TODO: schimbare operator in caz ca vreau sa l schimb
-//TODO: implementare modulo
-//TODO: timer de o secunda intre click-uri si sa sterg spam-ul
 //TODO: variabila in care retin ultimul operator introdus,sa se inlocuiasca daca nu se introduce alt numar si continui sa dau egal
 //TODO: sa pot incepe cu plus sau minus si sa le pot schimba iar intre ele daca introduce iar alt operator
 function adauga(input) {
@@ -53,7 +51,6 @@ function adauga(input) {
 function calculate() {
   try {
     count++;
-
     //edge case - nu pot egala un camp gol
     if (display.value === "") {
       return showAlert("Try to put a number.");

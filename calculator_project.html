@@ -36,7 +36,9 @@
             <button onclick="adauga('/')" class="operator"> / </button>
             <button onclick="adauga('0')"> 0 </button>
             <button onclick="adauga(',')"> , </button>
-            <button onclick="calculate()"> = </button>
+            <button
+                onclick="calculate();var time=this;time.disabled=true;setTimeout(function() {time.disabled = false;},3000);">
+                = </button>
             <button onclick="clear_display()" class="operator"> C </button>
         </div>
     </div>

@@ -76,6 +76,5 @@ Proiectul este functional,dar,urmeaza sa adaug imbunatiri:
 
 - Alert messages user-friendly,sa nu mai fie afisate prin intermediul browserului
 - In caz ca doresc sa schimb operatorul,sa se modifice cu cel anterior in caz ca nu adaug cifra
-- Anti-spam modificat prin timp de o secunda intre click-uri in urma apasarii butonului '='
 - Sa pot incepe si cu '+' si sa pot schimba cu '-' daca nu introduc cifra
 - Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
