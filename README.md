@@ -79,4 +79,3 @@ Proiectul este functional,dar,urmeaza sa adaug imbunatiri:
 - Anti-spam modificat prin timp de o secunda intre click-uri in urma apasarii butonului '='
 - Sa pot incepe si cu '+' si sa pot schimba cu '-' daca nu introduc cifra
 - Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
-- Fontul display ul sa se micsoreze in urma adaugarii mai multor caractere pentru a fi vizibil total.

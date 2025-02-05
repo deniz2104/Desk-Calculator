@@ -1,4 +1,5 @@
 const display = document.getElementById("display");
+let initial_size = display.style.fontSize;
 let list_of_fontsizes = ["2.5rem", "2.4rem", "2.3rem", "2.2rem", "2.1rem"];
 let list_of_lenghts = [10, 14, 18, 22, 26];
 let index_of_lenghts = 0;
@@ -6,14 +7,13 @@ let prev_input = "";
 let prev_display = "";
 let count = 0;
 
+//TODO: implementare istoric cu rezultatele
 //TODO: alert message user-friendly
 //TODO: schimbare operator in caz ca vreau sa l schimb
 //TODO: implementare modulo
 //TODO: timer de o secunda intre click-uri si sa sterg spam-ul
 //TODO: variabila in care retin ultimul operator introdus,sa se inlocuiasca daca nu se introduce alt numar si continui sa dau egal
 //TODO: sa pot incepe cu plus sau minus si sa le pot schimba iar intre ele daca introduce iar alt operator
-//TODO: sa micsorez textul pe masura ce adaug caractere
-
 function adauga(input) {
   if (display.value.length >= 1) {
     prev_input = display.value[display.value.length - 1];
@@ -92,6 +92,8 @@ function clear_display() {
 
 function reset_display() {
   display.value = "";
+  display.style.fontSize = initial_size;
+  index_of_lenghts = 0;
   prev_display = "";
   prev_input = "";
   count = 0;
@@ -124,12 +126,7 @@ function updateDisplay(input) {
     });
     display.value = formattedValue;
   }
-  for (let i = 0; i < list_of_lenghts.length; i++) {
-    if (list_of_lenghts[i] === display.value.length) {
-      display.style.fontSize = list_of_fontsizes[i];
-      break;
-    }
-  }
+  modify_size(display);
 }
 
 function adjustCursorPosition(before, after, pos) {
@@ -183,6 +180,7 @@ function displayResult(result) {
 
   display.value = parts.join(",");
   prev_display = display.value;
+  modify_size(display);
 }
 
 function isOperatorOrDot(input) {
@@ -231,6 +229,12 @@ function isInvalidResult(result) {
 
 function isDigitOrDecimal(char) {
   return isDigit(char) || char === ",";
+}
+
+function modify_size(display) {
+  if (list_of_lenghts.indexOf(display.value.length) !== -1) {
+    display.style.fontSize = list_of_fontsizes[index_of_lenghts++];
+  }
 }
 
 function isDigit(char) {
