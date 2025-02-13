@@ -1,5 +1,6 @@
 const display = document.getElementById("display");
 let initial_size = display.style.fontSize;
+let history_numbers = [];
 let list_of_fontsizes = ["2.5rem", "2.4rem", "2.3rem", "2.2rem", "2.1rem"];
 let list_of_lenghts = [10, 14, 18, 22, 26];
 let index_of_lenghts = 0;
@@ -7,11 +8,10 @@ let prev_input = "";
 let prev_display = "";
 let count = 0;
 
-//TODO: implementare istoric cu rezultatele
 //TODO: alert message user-friendly
-//TODO: schimbare operator in caz ca vreau sa l schimb
-//TODO: variabila in care retin ultimul operator introdus,sa se inlocuiasca daca nu se introduce alt numar si continui sa dau egal
-//TODO: sa pot incepe cu plus sau minus si sa le pot schimba iar intre ele daca introduce iar alt operator
+//TODO: In caz ca doresc sa schimb operatorul,sa se modifice cu cel anterior in caz ca nu adaug cifra
+//TODO: Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
+
 function adauga(input) {
   if (display.value.length >= 1) {
     prev_input = display.value[display.value.length - 1];
@@ -72,6 +72,8 @@ function calculate() {
     }
     const result = custom_eval_funct(display.value);
     displayResult(result);
+    history_numbers.push(result);
+    updateHistory();
     if (isInvalidResult(result)) {
       return showAlert("Error: Invalid expression.");
     }
@@ -323,4 +325,23 @@ function adunare_si_scadere(vec) {
     }
   }
   return current;
+}
+
+function updateHistory() {
+  let historyDiv = document.getElementById("history");
+  historyDiv.innerHTML = "";
+
+  history_numbers.forEach((entry) => {
+    let div = document.createElement("div");
+    div.classList.add("history-entry");
+    div.textContent = entry;
+    historyDiv.appendChild(div);
+  });
+
+  historyDiv.scrollTop = historyDiv.scrollHeight;
+}
+
+function clearHistory() {
+  history_numbers = [];
+  updateDisplay();
 }
