@@ -7,6 +7,7 @@
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 
@@ -40,9 +41,12 @@
                 onclick="calculate();var time=this;time.disabled=true;setTimeout(function() {time.disabled = false;},3000);">
                 = </button>
             <button onclick="clear_display()" class="operator"> C </button>
+            <button onclick="sterge()"><i class="fa-solid fa-delete-left"></i></button>
         </div>
+        <button onclick="toggleHistory()">Show history</button>
     </div>
     <div id="history-container">
+        <button id="close-history" onclick="toggleHistory()">✖ Close</button>
         <h3>History</h3>
         <div id="history"></div>
     </div>

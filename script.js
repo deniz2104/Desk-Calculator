@@ -9,8 +9,9 @@ let prev_display = "";
 let count = 0;
 
 //TODO: alert message user-friendly
-//TODO: In caz ca doresc sa schimb operatorul,sa se modifice cu cel anterior in caz ca nu adaug cifra
 //TODO: Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
+//TODO: sa modific cum se vede atunci cand sterg
+//TODO: sa modific aspectul de la istoric
 
 function adauga(input) {
   if (display.value.length >= 1) {
@@ -20,9 +21,9 @@ function adauga(input) {
   if (isOperatorOrDot(input) && input !== "-" && display.value === "") {
     return showAlert("Try to put a number first.");
   }
-  //edge case - nu pot pune operator dupa alt operator
+
   if (isInvalidOperatorSequence(prev_input, input)) {
-    return showAlert("Error: You cannot add an operator after one of them.");
+    display.value = display.value.slice(0, display.value.length - 1);
   }
 
   //edge case - nu pot avea mai multe virgule
@@ -344,4 +345,21 @@ function updateHistory() {
 function clearHistory() {
   history_numbers = [];
   updateDisplay();
+}
+
+function toggleHistory() {
+  let historyContainer = document.getElementById("history-container");
+
+  if (
+    historyContainer.style.display === "none" ||
+    historyContainer.style.display === ""
+  ) {
+    historyContainer.style.display = "block";
+  } else {
+    historyContainer.style.display = "none";
+  }
+}
+
+function sterge() {
+  display.value = display.value.slice(0, display.value.length - 1);
 }

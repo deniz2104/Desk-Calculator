@@ -146,15 +146,32 @@ button:focus {
 #history-container {
   width: 300px;
   height: 200px;
+  border: 1px solid #ccc;
   padding: 10px;
   margin-top: 10px;
   overflow-y: auto;
+  background: #f9f9f9;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  display: none;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 .history-entry {
   padding: 5px;
   border-bottom: 1px solid #ddd;
   font-size: 16px;
+}
+
+#close-history {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  float: right;
 }
 
 @media (max-width: 600px) {
