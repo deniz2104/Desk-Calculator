@@ -75,5 +75,4 @@ Functia `updateDisplay()` unde se va prelucra stringul astfel incat numerele de 
 Proiectul este functional,dar,urmeaza sa adaug imbunatiri:
 
 - Alert messages user-friendly,sa nu mai fie afisate prin intermediul browserului
-- In caz ca doresc sa schimb operatorul,sa se modifice cu cel anterior in caz ca nu adaug cifra
 - Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
