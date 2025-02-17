@@ -1,4 +1,9 @@
 const display = document.getElementById("display");
+const operatorRegex = /[+\-*/]/g;
+let temp_operator = "";
+let operator = "";
+let lastNumber = "";
+let temp_lastNumber = "";
 let initial_size = display.style.fontSize;
 let history_numbers = [];
 let list_of_fontsizes = ["2.5rem", "2.4rem", "2.3rem", "2.2rem", "2.1rem"];
@@ -9,7 +14,6 @@ let prev_display = "";
 let count = 0;
 
 //TODO: alert message user-friendly
-//TODO: Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
 //TODO: sa modific cum se vede atunci cand sterg
 //TODO: sa modific aspectul de la istoric
 
@@ -67,9 +71,19 @@ function calculate() {
       return showAlert("Error: Expression cannot end with an operator.");
     }
 
-    //edge case - click-uri multiple nu sunt permise
-    if (too_many_clicks() && prev_display === display.value) {
-      return showAlert("Error: Too many clicks.");
+    [operator, lastNumber] = get_last_number_and_operator(display);
+    if (
+      operator !== undefined &&
+      lastNumber !== display.value.split(operatorRegex)[0] &&
+      display.value.split(operatorRegex).length > 1
+    ) {
+      temp_operator = operator;
+      temp_lastNumber = lastNumber;
+    }
+
+    if (display.value === prev_display && operator === undefined) {
+      display.value += temp_operator;
+      display.value += temp_lastNumber;
     }
     const result = custom_eval_funct(display.value);
     displayResult(result);
@@ -96,6 +110,10 @@ function reset_display() {
   index_of_lenghts = 0;
   prev_display = "";
   prev_input = "";
+  operator = "";
+  temp_operator = "";
+  lastNumber = "";
+  temp_lastNumber = "";
   count = 0;
 }
 
@@ -103,8 +121,6 @@ function updateDisplay(input) {
   prev_display = display.value;
   display.value += input;
   if (display.value.length >= 4) {
-    const operatorRegex = /[+\-*/]/g;
-
     const parts = display.value.split(operatorRegex);
     const operators = display.value.match(operatorRegex) || [];
 
@@ -127,18 +143,6 @@ function updateDisplay(input) {
     display.value = formattedValue;
   }
   modify_size(display);
-}
-
-function adjustCursorPosition(before, after, pos) {
-  const before_length = before.length;
-  const after_length = after.length;
-  if (after_length > before_length) {
-    const diff = after_length - before_length;
-    if (pos + diff <= after_length) {
-      pos += diff;
-    }
-  }
-  return pos;
 }
 
 function formatWithThousandSeparator(value) {
@@ -181,6 +185,13 @@ function displayResult(result) {
   display.value = parts.join(",");
   prev_display = display.value;
   modify_size(display);
+}
+
+function get_last_number_and_operator(display) {
+  const parts = display.value.split(operatorRegex);
+  const operator = display.value.match(operatorRegex) || [];
+  const lastNumber = parts[parts.length - 1];
+  return [operator[operator.length - 1], lastNumber];
 }
 
 function isOperatorOrDot(input) {
