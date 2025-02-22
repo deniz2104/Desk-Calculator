@@ -260,10 +260,6 @@ function too_long_input(input) {
   return input.length > 30;
 }
 
-function too_many_clicks() {
-  return count > 1;
-}
-
 function custom_eval_funct(expresion) {
   const vec = tokenize(expresion);
   return expresie(vec);
