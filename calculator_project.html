@@ -22,31 +22,31 @@
     <div id="calculator">
         <input id="display" readonly>
         <div id="keys">
-            <button onclick="adauga('+')" class="operator"> + </button>
-            <button onclick="adauga('7')"> 7 </button>
-            <button onclick="adauga('8')"> 8 </button>
-            <button onclick="adauga('9')"> 9 </button>
-            <button onclick="adauga('-')" class="operator"> - </button>
-            <button onclick="adauga('4')"> 4 </button>
-            <button onclick="adauga('5')"> 5 </button>
-            <button onclick="adauga('6')"> 6 </button>
-            <button onclick="adauga('*')" class="operator"> * </button>
-            <button onclick="adauga('1')"> 1 </button>
-            <button onclick="adauga('2')"> 2 </button>
-            <button onclick="adauga('3')"> 3 </button>
-            <button onclick="adauga('/')" class="operator"> / </button>
-            <button onclick="adauga('0')"> 0 </button>
-            <button onclick="adauga(',')"> , </button>
+            <button onclick="add('+')" class="operator"> + </button>
+            <button onclick="add('7')"> 7 </button>
+            <button onclick="add('8')"> 8 </button>
+            <button onclick="add('9')"> 9 </button>
+            <button onclick="add('-')" class="operator"> - </button>
+            <button onclick="add('4')"> 4 </button>
+            <button onclick="add('5')"> 5 </button>
+            <button onclick="add('6')"> 6 </button>
+            <button onclick="add('*')" class="operator"> * </button>
+            <button onclick="add('1')"> 1 </button>
+            <button onclick="add('2')"> 2 </button>
+            <button onclick="add('3')"> 3 </button>
+            <button onclick="add('/')" class="operator"> / </button>
+            <button onclick="add('0')"> 0 </button>
+            <button onclick="add(',')"> , </button>
             <button
                 onclick="calculate();var time=this;time.disabled=true;setTimeout(function() {time.disabled = false;},2000);">
                 = </button>
             <button onclick="clear_display()" class="operator"> C </button>
-            <button onclick="sterge()"><i class="fa-solid fa-delete-left"></i></button>
+            <button onclick="deleteLastCharacter()"><i class="fa-solid fa-delete-left"></i></button>
         </div>
         <button onclick="toggleHistory()">Show history</button>
     </div>
     <div id="history-container">
-        <button id="close-history" onclick="toggleHistory()">✖ Close</button>
+        <button id="close-history" onclick="toggleHistory()">✖</button>
         <h3>History</h3>
         <div id="history"></div>
     </div>

@@ -13,11 +13,8 @@ let prev_input = "";
 let prev_display = "";
 let count = 0;
 
-//TODO: alert message user-friendly
-//TODO: sa modific cum se vede atunci cand sterg
-//TODO: sa modific aspectul de la istoric
 
-function adauga(input) {
+function add(input) {
   if (display.value.length >= 1) {
     prev_input = display.value[display.value.length - 1];
   }
@@ -243,8 +240,27 @@ function isDigitOrDecimal(char) {
 }
 
 function modify_size(display) {
-  if (list_of_lenghts.indexOf(display.value.length) !== -1) {
-    display.style.fontSize = list_of_fontsizes[index_of_lenghts++];
+  const currentLength = display.value.length;
+  let targetIndex = 0;
+  
+  
+  for (let i = 0; i < list_of_lenghts.length; i++) {
+    if (currentLength >= list_of_lenghts[i]) {
+      targetIndex = i + 1;
+    }
+  }
+  
+  
+  if (targetIndex >= list_of_fontsizes.length) {
+    targetIndex = list_of_fontsizes.length - 1;
+  }
+  
+  if (targetIndex > 0) {
+    display.style.fontSize = list_of_fontsizes[targetIndex - 1];
+    index_of_lenghts = targetIndex;
+  } else {
+    display.style.fontSize = initial_size;
+    index_of_lenghts = 0;
   }
 }
 
@@ -293,6 +309,7 @@ function tokenize(expr) {
 
   return vec;
 }
+
 function expresie(vec) {
   const first_operation = procesare_dividere_si_multiplicare(vec);
   return adunare_si_scadere(first_operation);
@@ -367,6 +384,87 @@ function toggleHistory() {
   }
 }
 
-function sterge() {
+function deleteLastCharacter() {
+  if (display.value.length === 0) {
+    return;
+  }
+  
+
   display.value = display.value.slice(0, display.value.length - 1);
+  
+
+  if (display.value.length === 0) {
+    reset_display();
+    return;
+  }
+  
+  let rawValue = display.value.replace(/\./g, '');
+  
+  if (rawValue.length >= 4) {
+    const parts = rawValue.split(operatorRegex);
+    const operators = rawValue.match(operatorRegex) || [];
+
+    let formattedValue = "";
+
+    parts.forEach((part, index) => {
+      if (part.includes(",")) {
+        const [integerPart, decimalPart] = part.split(",");
+        formattedValue +=
+          formatWithThousandSeparator(integerPart) + "," + decimalPart;
+      } else {
+        formattedValue += formatWithThousandSeparator(part);
+      }
+
+      if (index < operators.length) {
+        formattedValue += operators[index];
+      }
+    });
+    display.value = formattedValue;
+  } else {
+    display.value = rawValue;
+  }
+  modify_size(display);
 }
+
+document.addEventListener('keydown', function(event) {
+  event.preventDefault(); 
+  
+  const key = event.key;
+  
+  if (key >= '0' && key <= '9') {
+    add(key);
+  }
+  
+  else if (key === '+') {
+    add('+');
+  }
+  else if (key === '-') {
+    add('-');
+  }
+  else if (key === '*') {
+    add('*');
+  }
+  else if (key === '/') {
+    add('/');
+  }
+  
+  else if (key === '.' || key === ',') {
+    add(',');
+  }
+  
+  else if (key === 'Enter' || key === '=') {
+    calculate();
+  }
+  
+  else if (key === 'Backspace') {
+    deleteLastCharacter();
+  }
+  
+  else if (key === 'c' || key === 'C' || key === 'Escape') {
+    clear_display();
+  }
+  
+  else if (key === 'h' || key === 'H') {
+    toggleHistory();
+  }
+});

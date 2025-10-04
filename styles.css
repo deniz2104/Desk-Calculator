@@ -126,6 +126,23 @@ button:focus {
   box-shadow: 0 0 0 3px var(--primary-color);
 }
 
+/* History toggle button styling */
+#calculator > button {
+  margin-top: 10px;
+  background-color: var(--primary-color);
+  color: var(--bg-colour);
+  font-size: 1.2rem;
+  padding: 15px;
+}
+
+#calculator > button:hover {
+  background-color: hsl(35, 100%, 65%);
+}
+
+#calculator > button:active {
+  background-color: hsl(35, 100%, 75%);
+}
+
 .operator {
   background-color: var(--primary-color);
 }
@@ -144,34 +161,76 @@ button:focus {
 }
 
 #history-container {
-  width: 300px;
-  height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-top: 10px;
+  width: 400px;
+  max-height: 500px;
+  border: none;
+  padding: 20px;
+  margin-top: 20px;
   overflow-y: auto;
-  background: #f9f9f9;
+  background: var(--bg-colour);
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: none;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--primary-color);
+}
+
+#history-container h3 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin: 0 0 15px 0;
+  text-align: center;
+  font-weight: bold;
 }
 
 .history-entry {
-  padding: 5px;
-  border-bottom: 1px solid #ddd;
-  font-size: 16px;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: var(--text-colour);
+  font-size: 1.1rem;
+  font-family: 'Courier New', monospace;
+  border-left: 4px solid var(--primary-color);
+  transition: background-color 0.2s ease;
+}
+
+.history-entry:hover {
+  background-color: hsl(0, 0%, 35%);
+}
+
+.history-entry:last-child {
+  margin-bottom: 0;
 }
 
 #close-history {
-  background: red;
-  color: white;
+  background: var(--primary-color);
+  color: var(--bg-colour);
   border: none;
-  padding: 5px 10px;
+  padding: 8px 15px;
   cursor: pointer;
-  float: right;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#close-history:hover {
+  background: hsl(35, 100%, 65%);
+  transform: scale(1.1);
 }
 
 @media (max-width: 600px) {
@@ -205,6 +264,22 @@ button:focus {
     height: 120px;
     border-width: 20px;
   }
+
+  #history-container {
+    width: 90vw;
+    max-width: 350px;
+    max-height: 70vh;
+    padding: 15px;
+  }
+
+  #history-container h3 {
+    font-size: 1.3rem;
+  }
+
+  .history-entry {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
 }
 
 @media (min-width: 250px) and (max-width: 450px) {
@@ -234,5 +309,27 @@ button:focus {
     width: 110px;
     height: 110px;
     border-width: 15px;
+  }
+
+  #history-container {
+    width: 85vw;
+    max-width: 300px;
+    max-height: 60vh;
+    padding: 12px;
+  }
+
+  #history-container h3 {
+    font-size: 1.2rem;
+  }
+
+  .history-entry {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  #close-history {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
   }
 }
