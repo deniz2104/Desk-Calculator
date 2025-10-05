@@ -1,78 +1,125 @@
-### Desktop Calculator from scratch
+<div align="center">
 
-## Descriere:
+# Desktop Calculator
 
-Proiectul se refera la un calculator de mana folosind JavaScript,CSS si HTML.
+[![Made with](https://img.shields.io/badge/made%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-blue)](#)
 
-## Executare comenzi:
+Calculator construit from scratch, cu evaluator de expresii propriu (fără functia predefinita `eval`).
 
-Calculatorul poate executa urmatoarele comenzi:
+</div>
 
-- Adunare(+);
-- Scadere(-);
-- Inmultire(\*);
-- Impartire(/);
-- Curatare ecran(C);
-- Egal(=);
+## 📚 Cuprins
 
-Userul poate interactiona asupra comenzilor folosind Tab,Shift+Tab si Enter sau apasand pe butoanele de pe ecran.
+- Funcționalități
+- Cum îl rulezi
+- Comenzi de la tastatură
+- Arhitectură și implementare
+- De ce nu am folosit eval
+- Probleme întâlnite
+- Roadmap
 
-## Motivatia proiectului:
+## ✨ Funcționalități
 
-Principala motivatie a fost implementarea logicii operatiilor aritmetice si dezvoltarea unui evaluator de expresie fara a folosi functia predefinita eval().
+- Adunare (+), Scădere (-), Înmulțire (*) și Împărțire (/)
+- Egal (=) pentru evaluarea expresiei curente
+- Clear (C) pentru ștergere
+- Afișare cu separatori pentru mii și zecimale
+- Interacțiune din tastatură 
 
-## Implementare:
+## ▶️ Cum îl rulezi
 
-Functionalitatea principala se leaga de functiile:
+Metoda simplă, local:
 
-- `custom_eval_funct()` care include:
-  - `tokenize()` care contine:
-    - `formatWithThousandSeparator_used_for_eval()`
-  - `expresie()` care contine:
-    - `procesare_dividere_si_multiplicare()`
-    - `adunare_si_scadere()`
-- `displayResult()`
-- `updateDisplay()` care include:
-  - `formatWithThousandSeparator()`
+1. Deschide fișierul `calculator_project.html` în browser (double-click sau drag & drop).
 
-Functia `custom_eval_funct()` reprezinta inlocuirea evaluatorului built-in eval() in care se face separarea numerelor si a operatorilor,respectiv,expresia.
+## ⌨️ Comenzi de la tastatură
 
-Functia `tokenize()` separa operatorii si numerele,inclusiv cele negative.Se prelucreaza cu functia `formatWithThousandSeparator_used_for_eval()` care inlocuieste ',' cu '.' si scoate caracterele '.' din partea de intreg.
+- Tab / Shift+Tab: navigare între butoane
+- Enter: activează butonul focalizat
+- Tastele numerice și operatorii (+, -, *, /, =) se pot introduce de la tastatura pentru ca exista mapare in fisierul de JavaScript.
 
-Functia `expresie()` in care se apeleaza functiile folosite pentru calcularea expresiei,respectandu-se ordinea operatorilor.
+## 🧱 Arhitectură și implementare
 
-Functia `displayResult()` in care se va prelucra numarul primit ca parametru si transmis intr-un format corect.Partea de intreg va fi prelucrata si caracterul '.' fiind pus in cazul miilor,concatenat cu ',' si cu partea de zecimale.Am folosit functia `toFixed()` pentru a preveni un potential overflow la introducerea altui numar mare.
+Funcțiile cheie:
 
-Functia `updateDisplay()` unde se va prelucra stringul astfel incat numerele de ordinul miilor/milioanelor sa fie reprezentate corect.Am folosit un regex de operatori pe care l-am folosit pentru a imparti string-ul in doua.Apoi am prelucrat partea dinainte de operator,apoi am adaugat operatorul.
+- `custom_eval_funct()` – înlocuiește `eval`; separă numerele și operatorii și evaluează expresia si respectiv precedența
+   - `tokenize()` – extrage token-urile (numere, inclusiv negative, și operatori)
+      - `formatWithThousandSeparator_used_for_eval()` – normalizează stringul (înlocuiește `,` cu `.` la zecimale și elimină `.` din partea întreagă)
+   - `expression()` – calculează rezultatul cu:
+      - `process_division_and_multiplication()`
+      - `sum_and_difference()`
+- `displayResult()` – formatează rezultatul final (mii folosinduse `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa nu fie lung)
+- `updateDisplay()` – formatează dinamic inputul curent; împarte după operatori, formatează partea numerică și re-compune stringul
 
-## Motive pentru care nu am folosit functia predefinita eval():
+Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct pentru mii, virgulă pentru zecimale).
 
-1. Securitate:
+### 🧩 Stare globală și elemente UI
 
-   - eval() poate executa cod arbitrar,ceea ce inseamna ca reprezinta un risc de securitate daca nu este corect folosit de user
+- `display` – input-ul principal pe care se afișează expresia/rezultatul
+- `history_numbers` – listă cu rezultate pentru istoric
+- Setări UI: `list_of_fontsizes`, `list_of_lenghts` și `index_of_lenghts` pentru redimensionarea fontului în funcție de lungimea expresiei; `initial_size` salvează mărimea de font inițială
+- Variabile de context: `operatorRegex`, `prev_input`, `prev_display`, `operator`, `temp_operator`, `lastNumber`, `temp_lastNumber`, `count`
 
-2. Performanta:
+### 🔎 Fluxul de input și validări
 
-   - functia predefinita eval() poate fi mai inceata decat un evaluator implementat folosind operatii aritmetice
+1. Introducere (click/ tastatură) prin `add(input)`
+2. Edge case-uri luate in considerare:
+   - început cu operator (exceptând „-” pentru numere negative)
+   - secvențe invalide de operatori sau zecimală dublă (`isInvalidOperatorSequence`, `isDuplicateDecimal`)
+   - zerouri la început (`isLeadingZero`)
+   - adăugare cifre după calculare (`isInvalidPostCalculationInput`)
+   - limită de lungime (`too_long_input`)
+3. Daca totul este in regula se executa `updateDisplay(input)` care:
+   - formatează partea întreagă cu `formatWithThousandSeparator`
+   - ajustează dimensiunea fontului (`modify_size`)
 
-3. Controlul aplicatiei:
+Erorile sunt comunicate prin `showAlert(message)` urmat de `reset_display()` pentru revenire la starea inițială.
 
-   - Putem avea control absolut asupra inputului care vine de la user avand in vedere ca multe edge case-uri sunt tratate.
+### 🧮 Evaluarea expresiei (fără eval)
 
-4. Implementand de la inceput logica aplicatiei,m-a ajutat la dezvoltarea skillurilor privind stringurile si modul in care prelucram numerele in display.
+- `calculate()` realizeaza evaluarea și gestionează edge-case-uri: expresie goală, dividere la zero, operator la final + ce am scris mai sus
+- `tokenize()` transformă stringul în vector de token-uri numeric/operator, cu suport pentru numere negative și separatori (prin `formatWithThousandSeparator_used_for_eval`)
+- `expression()` aplică precedența operatorilor în doi pași:
+  1. `process_division_and_multiplication()` – executa prima oara inmultirea si impartirea si pune rezultate într-un vector intermediar
+  2. `sum_and_difference()` – calculează suma/diferența secvențial
 
-## Probleme intalnite de-a lungul proiectului :
+### 🎯 Afișare și formatare
 
-1. Principala problema reprezinta modul in care sunt tratate stringurile si modul in care voiam sa afisez numerele in display.
-   Avand in vedere ca folosesc '.' pentru ordinul miilor si ',' pentru zecimale,am intalnit o problema atunci cand foloseam functia `parseFloat()`.
-   Atunci cand functia intalnea caracterul ',' totul era ignorat pentru ca in Javascript zecimalele sunt prelucrate cu '.',deci,am implementat o functie auxiliara `formatWithThousandSeparator_used_for_eval()` pentru a formata stringul corect.
+- `displayResult(result)`:
+  - convertește numărul la string; păstrează întregul sau folosește `toFixed(4)` pentru zecimale predefinite
+  - înlocuiește `.` cu `,` la zecimale, inserează `.` pentru mii
+  - salvează în `prev_display` și ajustează fontul
 
-2. Functia `updateDisplay()` este rudimentara pentru o interfata user-friendly.Atunci cand userul introducea un numar de ordinul miilor interveneau problemele avand in vedere logica initiala.
-   Separam display-ul in functie de caracterul ',' ceea ce a dus la erori logice.Dupa ce prelucra un numar,celalalt nu mai putea fi prelucrat.Asadar,am separat display-ul in functie de operatori si am prelucrat fiecare parte.
+### 🗂️ Istoric și utilități UI
 
-## Viitoare imbunatatiri:
+- `updateHistory()` – afișează lista rezultatelor în containerul `#history` cu scroll.
+- `toggleHistory()` – arată/ascunde containerul istoricul
+- `clearHistory()` – golește istoricul și actualizează UI
+- `deleteLastCharacter()` – șterge ultimul caracter, reformatează inputul și reaplică regula separatorilor
 
-Proiectul este functional,dar,urmeaza sa adaug imbunatiri:
+### ⌨️ Shortcut-uri folosinduse tastatura
 
-- Alert messages user-friendly,sa nu mai fie afisate prin intermediul browserului
-- Atunci cand egalez in continuare acelasi numar sa retin numarul si operatorul si operatiile sa continue
+Listener global `keydown` mapează:
+
+- cifrele 0–9 și operatorii + - * / către `add`
+- `.` sau `,` către `,` (zecimal)
+- `Enter` sau `=` către `calculate`
+- `Backspace` către `deleteLastCharacter`
+- `C`, `c` sau `Escape` către `clear_display`
+- `H` sau `h` către `toggleHistory`
+
+## 🚫 De ce nu am folosit eval
+
+1. Securitate – `eval` poate executa cod arbitrar, risc dacă inputul nu e controlat
+2. Performanță – un evaluator dedicat pentru aritmetică simplă e, în general, mai eficient
+3. Control – dețin control complet asupra tokenizării și regulilor (edge cases incluse)
+4. Învățare – a cimentat înțelegerea manipulării stringurilor și a formatării numerelor
+
+## 🐞 Probleme întâlnite
+
+1. Formatarea numerelor: folosesc `.` pentru mii și `,` pentru zecimale – `parseFloat()` ignoră partea după `,`. Soluție: `formatWithThousandSeparator_used_for_eval()` normalizează înainte de calcul.
+2. `updateDisplay()` inițial rudimentar: împărțirea după `,` a generat erori. Soluție: împărțire după operatori și formatare pe segmente.
+
+## 🗺️ Roadmap
+
+- Mesaje de alertă user-friendly (fără a folosi dialogul afisat de browser)

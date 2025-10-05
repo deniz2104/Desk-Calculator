@@ -276,9 +276,9 @@ function too_long_input(input) {
   return input.length > 30;
 }
 
-function custom_eval_funct(expresion) {
-  const vec = tokenize(expresion);
-  return expresie(vec);
+function custom_eval_funct(expression) {
+  const vec = tokenize(expression);
+  return expression(vec);
 }
 
 function tokenize(expr) {
@@ -310,12 +310,12 @@ function tokenize(expr) {
   return vec;
 }
 
-function expresie(vec) {
-  const first_operation = procesare_dividere_si_multiplicare(vec);
-  return adunare_si_scadere(first_operation);
+function expression(vec) {
+  const first_operation = process_division_and_multiplication(vec);
+  return sum_and_difference(first_operation);
 }
 
-function procesare_dividere_si_multiplicare(vec) {
+function process_division_and_multiplication(vec) {
   const res = [];
   let curr = vec[0];
 
@@ -337,7 +337,7 @@ function procesare_dividere_si_multiplicare(vec) {
   return res;
 }
 
-function adunare_si_scadere(vec) {
+function sum_and_difference(vec) {
   let current = vec[0];
   for (let i = 1; i < vec.length; i += 2) {
     const operator = vec[i];
