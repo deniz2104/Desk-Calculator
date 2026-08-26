@@ -36,19 +36,19 @@ Metoda simplă, local:
 
 - Tab / Shift+Tab: navigare între butoane
 - Enter: activează butonul focalizat
-- Tastele numerice și operatorii (+, -, *, /, =) se pot introduce de la tastatura pentru ca exista mapare in fisierul de JavaScript.
+- Tastele numerice și operatorii (+, -, *, /, =) se pot introduce de la tastatura pentru executarea operațiilor.
 
 ## 🧱 Arhitectură și implementare
 
 Funcțiile cheie:
 
-- `custom_eval_funct()` – înlocuiește `eval`; separă numerele și operatorii și evaluează expresia si respectiv precedența
-   - `tokenize()` – extrage token-urile (numere, inclusiv negative, și operatori)
+- `custom_eval_funct()` – înlocuiește funcția built-in `eval`; separă numerele și operatorii și evaluează expresia si respectiv precedența operatorilor
+   - `tokenize()` – extrage token-urile (numere și operatori)
       - `formatWithThousandSeparator_used_for_eval()` – normalizează stringul (înlocuiește `,` cu `.` la zecimale și elimină `.` din partea întreagă)
    - `expression()` – calculează rezultatul cu:
       - `process_division_and_multiplication()`
       - `sum_and_difference()`
-- `displayResult()` – formatează rezultatul final (mii folosinduse `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa nu fie lung)
+- `displayResult()` – formatează rezultatul final (pentru mii folosindu-se `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa poate fi citit de pe display)
 - `updateDisplay()` – formatează dinamic inputul curent; împarte după operatori, formatează partea numerică și re-compune stringul
 
 Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct pentru mii, virgulă pentru zecimale).
@@ -56,8 +56,8 @@ Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct
 ### 🧩 Stare globală și elemente UI
 
 - `display` – input-ul principal pe care se afișează expresia/rezultatul
-- `history_numbers` – listă cu rezultate pentru istoric
-- Setări UI: `list_of_fontsizes`, `list_of_lenghts` și `index_of_lenghts` pentru redimensionarea fontului în funcție de lungimea expresiei; `initial_size` salvează mărimea de font inițială
+- `history_numbers` – listă cu rezultatele din istoric
+- Setări UI: `list_of_fontsizes`, `list_of_lenghts` și `index_of_lenghts` setări dinamice pentru redimensionarea fontului în funcție de lungimea expresiei; `initial_size` salvează mărimea de font inițială
 - Variabile de context: `operatorRegex`, `prev_input`, `prev_display`, `operator`, `temp_operator`, `lastNumber`, `temp_lastNumber`, `count`
 
 ### 🔎 Fluxul de input și validări
@@ -75,7 +75,7 @@ Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct
 
 Erorile sunt comunicate prin `showAlert(message)` urmat de `reset_display()` pentru revenire la starea inițială.
 
-### 🧮 Evaluarea expresiei (fără eval)
+### 🧮 Evaluarea expresiei
 
 - `calculate()` realizeaza evaluarea și gestionează edge-case-uri: expresie goală, dividere la zero, operator la final + ce am scris mai sus
 - `tokenize()` transformă stringul în vector de token-uri numeric/operator, cu suport pentru numere negative și separatori (prin `formatWithThousandSeparator_used_for_eval`)
@@ -107,13 +107,6 @@ Listener global `keydown` mapează:
 - `Backspace` către `deleteLastCharacter`
 - `C`, `c` sau `Escape` către `clear_display`
 - `H` sau `h` către `toggleHistory`
-
-## 🚫 De ce nu am folosit eval
-
-1. Securitate – `eval` poate executa cod arbitrar, risc dacă inputul nu e controlat
-2. Performanță – un evaluator dedicat pentru aritmetică simplă e, în general, mai eficient
-3. Control – dețin control complet asupra tokenizării și regulilor (edge cases incluse)
-4. Învățare – a cimentat înțelegerea manipulării stringurilor și a formatării numerelor
 
 ## 🐞 Probleme întâlnite
 
