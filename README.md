@@ -4,7 +4,7 @@
 
 [![Made with](https://img.shields.io/badge/made%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-blue)](#)
 
-Calculator construit from scratch, cu evaluator de expresii propriu (fără functia predefinita `eval`).
+Calculator construit from scratch, cu evaluator de expresii propriu pentru o introducere in JavaScript
 
 </div>
 
