@@ -51,7 +51,7 @@ Funcțiile cheie:
 - `displayResult()` - formatează rezultatul final (pentru mii folosindu-se `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa poate fi citit de pe display)
 - `updateDisplay()` - formatează dinamic inputul curent; împarte după operatori, formatează partea numerică și re-compune stringul
 
-Notă: Regulile de formatare sunt in concordanta cu stilul „european" (punct pentru mii, virgulă pentru zecimale).
+Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct pentru mii, virgulă pentru zecimale).
 
 ### 🧩 Stare globală și elemente UI
 
@@ -64,7 +64,7 @@ Notă: Regulile de formatare sunt in concordanta cu stilul „european" (punct p
 
 1. Introducere (click/ tastatură) prin `add(input)`
 2. Edge case-uri luate in considerare:
-   - început cu operator (exceptând „-" pentru numere negative)
+   - început cu operator (exceptând „-” pentru numere negative)
    - secvențe invalide de operatori sau zecimală dublă (`isInvalidOperatorSequence`, `isDuplicateDecimal`)
    - zerouri la început (`isLeadingZero`)
    - adăugare cifre după calculare (`isInvalidPostCalculationInput`)
