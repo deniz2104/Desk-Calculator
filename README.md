@@ -42,21 +42,21 @@ Metoda simplă, local:
 
 Funcțiile cheie:
 
-- `custom_eval_funct()` – înlocuiește funcția built-in `eval`; separă numerele și operatorii și evaluează expresia si respectiv precedența operatorilor
-   - `tokenize()` – extrage token-urile (numere și operatori)
-      - `formatWithThousandSeparator_used_for_eval()` – normalizează stringul (înlocuiește `,` cu `.` la zecimale și elimină `.` din partea întreagă)
-   - `expression()` – calculează rezultatul cu:
+- `custom_eval_funct()` - înlocuiește funcția built-in `eval`; separă numerele și operatorii și evaluează expresia si respectiv precedența operatorilor
+   - `tokenize()` - extrage token-urile (numere și operatori)
+      - `formatWithThousandSeparator_used_for_eval()` - normalizează stringul (înlocuiește `,` cu `.` la zecimale și elimină `.` din partea întreagă)
+   - `expression()` - calculează rezultatul cu:
       - `process_division_and_multiplication()`
       - `sum_and_difference()`
-- `displayResult()` – formatează rezultatul final (pentru mii folosindu-se `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa poate fi citit de pe display)
-- `updateDisplay()` – formatează dinamic inputul curent; împarte după operatori, formatează partea numerică și re-compune stringul
+- `displayResult()` - formatează rezultatul final (pentru mii folosindu-se `.` si `,` pentru zecimale; folosește `toFixed()` pentru a evita erori de reprezentare si pentru ca rezultatul sa poate fi citit de pe display)
+- `updateDisplay()` - formatează dinamic inputul curent; împarte după operatori, formatează partea numerică și re-compune stringul
 
-Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct pentru mii, virgulă pentru zecimale).
+Notă: Regulile de formatare sunt in concordanta cu stilul „european" (punct pentru mii, virgulă pentru zecimale).
 
 ### 🧩 Stare globală și elemente UI
 
-- `display` – input-ul principal pe care se afișează expresia/rezultatul
-- `history_numbers` – listă cu rezultatele din istoric
+- `display` - input-ul principal pe care se afișează expresia/rezultatul
+- `history_numbers` - listă cu rezultatele din istoric
 - Setări UI: `list_of_fontsizes`, `list_of_lenghts` și `index_of_lenghts` setări dinamice pentru redimensionarea fontului în funcție de lungimea expresiei; `initial_size` salvează mărimea de font inițială
 - Variabile de context: `operatorRegex`, `prev_input`, `prev_display`, `operator`, `temp_operator`, `lastNumber`, `temp_lastNumber`, `count`
 
@@ -64,7 +64,7 @@ Notă: Regulile de formatare sunt in concordanta cu stilul „european” (punct
 
 1. Introducere (click/ tastatură) prin `add(input)`
 2. Edge case-uri luate in considerare:
-   - început cu operator (exceptând „-” pentru numere negative)
+   - început cu operator (exceptând „-" pentru numere negative)
    - secvențe invalide de operatori sau zecimală dublă (`isInvalidOperatorSequence`, `isDuplicateDecimal`)
    - zerouri la început (`isLeadingZero`)
    - adăugare cifre după calculare (`isInvalidPostCalculationInput`)
@@ -80,8 +80,8 @@ Erorile sunt comunicate prin `showAlert(message)` urmat de `reset_display()` pen
 - `calculate()` realizeaza evaluarea și gestionează edge-case-uri: expresie goală, dividere la zero, operator la final + ce am scris mai sus
 - `tokenize()` transformă stringul în vector de token-uri numeric/operator, cu suport pentru numere negative și separatori (prin `formatWithThousandSeparator_used_for_eval`)
 - `expression()` aplică precedența operatorilor în doi pași:
-  1. `process_division_and_multiplication()` – executa prima oara inmultirea si impartirea si pune rezultate într-un vector intermediar
-  2. `sum_and_difference()` – calculează suma/diferența secvențial
+  1. `process_division_and_multiplication()` - executa prima oara inmultirea si impartirea si pune rezultate într-un vector intermediar
+  2. `sum_and_difference()` - calculează suma/diferența secvențial
 
 ### 🎯 Afișare și formatare
 
@@ -92,16 +92,16 @@ Erorile sunt comunicate prin `showAlert(message)` urmat de `reset_display()` pen
 
 ### 🗂️ Istoric și utilități UI
 
-- `updateHistory()` – afișează lista rezultatelor în containerul `#history` cu scroll.
-- `toggleHistory()` – arată/ascunde containerul istoricul
-- `clearHistory()` – golește istoricul și actualizează UI
-- `deleteLastCharacter()` – șterge ultimul caracter, reformatează inputul și reaplică regula separatorilor
+- `updateHistory()` - afișează lista rezultatelor în containerul `#history` cu scroll.
+- `toggleHistory()` - arată/ascunde containerul istoricul
+- `clearHistory()` - golește istoricul și actualizează UI
+- `deleteLastCharacter()` - șterge ultimul caracter, reformatează inputul și reaplică regula separatorilor
 
 ### ⌨️ Shortcut-uri folosinduse tastatura
 
 Listener global `keydown` mapează:
 
-- cifrele 0–9 și operatorii + - * / către `add`
+- cifrele 0-9 și operatorii + - * / către `add`
 - `.` sau `,` către `,` (zecimal)
 - `Enter` sau `=` către `calculate`
 - `Backspace` către `deleteLastCharacter`
@@ -110,7 +110,7 @@ Listener global `keydown` mapează:
 
 ## 🐞 Probleme întâlnite
 
-1. Formatarea numerelor: folosesc `.` pentru mii și `,` pentru zecimale – `parseFloat()` ignoră partea după `,`. Soluție: `formatWithThousandSeparator_used_for_eval()` normalizează înainte de calcul.
+1. Formatarea numerelor: folosesc `.` pentru mii și `,` pentru zecimale - `parseFloat()` ignoră partea după `,`. Soluție: `formatWithThousandSeparator_used_for_eval()` normalizează înainte de calcul.
 2. `updateDisplay()` inițial rudimentar: împărțirea după `,` a generat erori. Soluție: împărțire după operatori și formatare pe segmente.
 
 ## 🗺️ Roadmap
